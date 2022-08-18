@@ -64,6 +64,13 @@ export const Input = styled.input`
   font-weight: bold;
 `;
 
+export const TextArea = styled.textarea`
+  border: none;
+  font-size: 16px;
+  resize: vertical;
+  width: 100%;
+`;
+
 export const Body = styled.div`
   font-family: 'Lora', serif;
 `;

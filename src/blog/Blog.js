@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import BlogProvider, { BlogContext } from '../context/BlogProvider';
+import BlogProvider, { BlogContext } from './BlogProvider';
 import NewPost from './NewPost';
 import Post from './Post';
 import { BlogStyle, PostWrapper, Title } from './Styles';

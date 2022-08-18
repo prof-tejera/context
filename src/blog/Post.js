@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { BlogContext } from '../context/BlogProvider';
-import Editor from './Editor';
-import { Link } from 'react-router-dom';
-import { Body, Input, FakeLink, PostWrapper, Title } from './Styles';
+import { BlogContext } from './BlogProvider';
+import { Body, Input, FakeLink, PostWrapper, Title, TextArea } from './Styles';
 
-const Inner = ({ post, routed }) => {
+const InnerPost = ({ post }) => {
   const { updatePost, setSelectedPostId } = useContext(BlogContext);
 
   const [values, setValues] = useState({
@@ -21,8 +19,7 @@ const Inner = ({ post, routed }) => {
 
   return (
     <PostWrapper>
-      {routed && <Link to="/">All Posts</Link>}
-      {!routed && <FakeLink onClick={() => setSelectedPostId(null)}>All Posts</FakeLink>}
+      <FakeLink onClick={() => setSelectedPostId(null)}>All Posts</FakeLink>
       <Title>
         <Input
           value={post.title}
@@ -32,10 +29,10 @@ const Inner = ({ post, routed }) => {
         />
       </Title>
       <Body>
-        <Editor
+        <TextArea
           value={post.body}
-          onChange={newBody => {
-            setValues(v => ({ ...v, body: newBody }));
+          onChange={e => {
+            setValues(v => ({ ...v, body: e.target.value }));
           }}
         />
       </Body>
@@ -43,13 +40,13 @@ const Inner = ({ post, routed }) => {
   );
 };
 
-const Post = ({ postId, routed }) => {
+const Post = ({ postId }) => {
   const { retrievePost } = useContext(BlogContext);
   const post = retrievePost({ postId });
 
   if (!post) return <div>Not Found</div>;
 
-  return <Inner post={post} routed={routed} />;
+  return <InnerPost post={post} />;
 };
 
 export default Post;

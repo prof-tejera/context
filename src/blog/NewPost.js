@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
-import { BlogContext } from '../context/BlogProvider';
-import Editor from './Editor';
-import { Button, Input, PostWrapper, Title } from './Styles';
+import { BlogContext } from './BlogProvider';
+import { Button, Input, PostWrapper, TextArea, Title } from './Styles';
 
 const NewPost = () => {
   const { createPost } = useContext(BlogContext);
@@ -13,7 +12,7 @@ const NewPost = () => {
       <Title>
         <Input placeholder="Title..." value={title} onChange={e => setTitle(e.target.value)} />
       </Title>
-      <Editor value={body} onChange={setBody} />
+      <TextArea value={body} onChange={e => setBody(e.target.value)} />
       <Button
         onClick={() => {
           createPost({ title, body });
