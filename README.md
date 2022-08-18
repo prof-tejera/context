@@ -7,11 +7,12 @@ const usePersistedState = (storageKey, fallbackValue) => {
   const [value, setValue] = useState(() => {
     const storedValue = window.localStorage.getItem(storageKey);
 
-    // If there is a stored value return that, otherwise fallback
-    const n = storedValue === null ? fallbackValue || 0 : storedValue;
+    if (storedValue === null || !storedValue) {
+      return fallbackValue;
+    }
 
     try {
-      return JSON.parse(n);
+      return JSON.parse(storedValue);
     } catch (e) {
       console.log('Error parsing stored value', e);
       return null;
@@ -19,10 +20,20 @@ const usePersistedState = (storageKey, fallbackValue) => {
   });
 
   useEffect(() => {
-    window.localStorage.setItem(storageKey, JSON.stringify(value));
-  }, [value])
+    if (value) {
+      window.localStorage.setItem(storageKey, JSON.stringify(value));
+    } else {
+      window.localStorage.removeItem(storageKey);
+    }
+  }, [value]);
 
-  return [value, setValue];
+  return [
+    value,
+    setValue,
+    () => {
+      setValue(fallbackValue);
+    },
+  ];
 };
 ```
 
@@ -30,16 +41,13 @@ and a sample `App` to test it:
 
 ```jsx
 const App = () => {
-  const [value, setValue] = usePersistedState('myJson', {
+  const [value, setValue, resetValue] = usePersistedState('myJson', {
     a: 1,
     b: 2,
   });
 
   return (
     <div>
-      <div>
-        <pre>{JSON.stringify(value, null, 2)}</pre>
-      </div>
       <button
         onClick={() => {
           setValue({
@@ -50,13 +58,10 @@ const App = () => {
       >
         Update
       </button>
-      <button
-        onClick={() => {
-          setValue(null);
-        }}
-      >
-        Clear
-      </button>
+      <button onClick={() => resetValue()}>Clear</button>
+      <div>
+        <pre>{JSON.stringify(value, null, 2)}</pre>
+      </div>
     </div>
   );
 };

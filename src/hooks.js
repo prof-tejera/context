@@ -10,26 +10,36 @@ export const usePrevious = value => {
   return ref.current;
 };
 
-export const usePersistedState = (key, initialValue) => {
-  const [storedValue, setStoredValue] = useState(() => {
+export const usePersistedState = (storageKey, fallbackValue) => {
+  const [value, setValue] = useState(() => {
+    const storedValue = window.localStorage.getItem(storageKey);
+
+    if (storedValue === null || !storedValue) {
+      console.log('returning fallback', fallbackValue);
+      return fallbackValue;
+    }
+
     try {
-      // Read initial value from local storage or fallback to the given initial value
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
-    } catch (error) {
-      console.log(error);
-      return initialValue;
+      return JSON.parse(storedValue);
+    } catch (e) {
+      console.log('Error parsing stored value', e);
+      return null;
     }
   });
 
-  const setValue = value => {
-    try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (value) {
+      window.localStorage.setItem(storageKey, JSON.stringify(value));
+    } else {
+      window.localStorage.removeItem(storageKey);
     }
-  };
+  }, [value]);
 
-  return [storedValue, setValue];
+  return [
+    value,
+    setValue,
+    () => {
+      setValue(fallbackValue);
+    },
+  ];
 };
