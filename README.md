@@ -401,6 +401,8 @@ const Wrapped = () => {
 export default Wrapped;
 ```
 
+Lastly, we'll create a custom hooks so that the content of our blog is persisted at least locally.
+
 ```jsx
 const usePersistedState = (storageKey, fallbackValue) => {
   const [value, setValue] = useState(() => {

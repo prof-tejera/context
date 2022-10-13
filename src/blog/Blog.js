@@ -9,7 +9,7 @@ const Blog = () => {
   if (selectedPostId) return <Post postId={selectedPostId} editable />;
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div>
         {posts.map(post => (
           <PostWrapper key={post.id} onClick={() => setSelectedPostId(post.id)}>

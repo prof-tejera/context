@@ -33,7 +33,7 @@ export const usePersistedState = (storageKey, fallbackValue) => {
     } else {
       window.localStorage.removeItem(storageKey);
     }
-  }, [value]);
+  }, [storageKey, value]);
 
   return [
     value,

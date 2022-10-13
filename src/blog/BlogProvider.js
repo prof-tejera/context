@@ -3,7 +3,7 @@ import { usePersistedState } from '../hooks';
 export const BlogContext = React.createContext({});
 
 const BlogProvider = ({ children }) => {
-  const [posts, setPosts] = usePersistedState('blog', []);
+  const [posts, setPosts] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
 
   return (
