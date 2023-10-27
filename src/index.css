@@ -1,1 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+html, body {
+  height: 100%;
+  background-color: #eee;
+  font-size: 20px;
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  background-color: #444;
+  align-items: center;
+  color: white;
+  height: 60px;
+}
+
+nav a {
+  color: white;
+  padding: 0px 20px;
+}
+
+.panel {
+  border-radius: 20px;
+  background-color: white;
+  padding: 20px;
+  width: 400px;
+  margin: 20px;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+
+  .text {
+    flex: 1;
+  }
+
+  &.post:hover {
+    background-color: #fafafa;
+  }
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-right: 5px;
+
+  &.primary {
+    background-color: #02f;
+    color: white;
+  }
+
+  &.danger {
+    background-color: red;
+    color: white;
+  }
+}
+
+input {
+  font-size: 16px;
+  width: calc(100% - 10px);
+  margin-bottom: 20px;
+}
+
+textarea {
+  font-size: 20px;
+  resize: vertical;
+  width: calc(100% - 10px);
+  margin-bottom: 10px;
+}
+
+.post {
+  display: flex;
+}
